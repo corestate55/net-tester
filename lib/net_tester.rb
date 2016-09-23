@@ -85,6 +85,10 @@ module NetTester
                             destination_port: port)
   end
 
+  def self.add_p2p(port_a, port_b)
+    controller.create_p2p_patch(source_port: port_a, destination_port: port_b)
+  end
+
   def self.list
     controller.list_patches
   end

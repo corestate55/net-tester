@@ -17,6 +17,15 @@ module NetTester
                                 physical_switch_dpid: physical_switch_dpid)
     end
 
+    def self.create_p2p(physical_switch_dpid:, source_port:, destination_port:)
+      NetworkToNetworkPatchFlow.create(physical_switch_dpid: physical_switch_dpid,
+                                       source_port: source_port,
+                                       destination_port: destination_port)
+      NetworkToNetworkPatchFlow.create(physical_switch_dpid: physical_switch_dpid,
+                                       source_port: destination_port,
+                                       destination_port: source_port)
+    end
+
     def self.destroy(physical_switch_dpid:,
                      vlan_id:, source_port:, source_mac_address:, destination_port:)
       if vlan_id
