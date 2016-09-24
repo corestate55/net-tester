@@ -17,7 +17,6 @@ Feature: テスト対象ポート間パッチング
       |           1 |                2 |
       |           2 |                3 |
       |           3 |                1 |
-    Then 30 sec wait
     Then 各テストホストは以下の数パケットを受信する:
       | Source Host | Destination Host | Received Packets |
       |           1 |                2 |                0 |
