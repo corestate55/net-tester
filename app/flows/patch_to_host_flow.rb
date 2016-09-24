@@ -1,3 +1,6 @@
+# coding: utf-8
+# frozen_string_literal: true
+
 class PatchToHostFlow < ActiveFlow::Base
   def self.create(destination_mac_address:, out_port:)
     send_flow_mod_add(0xdad1c001,

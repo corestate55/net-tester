@@ -1,3 +1,6 @@
+# coding: utf-8
+# frozen_string_literal: true
+
 class HostToPatchFlow < ActiveFlow::Base
   def self.create(in_port:)
     send_flow_mod_add(0xdad1c001,

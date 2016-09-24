@@ -1,3 +1,6 @@
+# coding: utf-8
+# frozen_string_literal: true
+
 class PatchToVlanHostBroadcastFlow < ActiveFlow::Base
   def self.create(vlan_id:)
     send_flow_mod_add(0xdad1c001,

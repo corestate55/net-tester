@@ -1,3 +1,6 @@
+# coding: utf-8
+# frozen_string_literal: true
+
 class NetworkToPatchFlow < ActiveFlow::Base
   def self.create(physical_switch_dpid:, in_port:)
     send_flow_mod_add(physical_switch_dpid,

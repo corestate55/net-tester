@@ -1,6 +1,5 @@
 # coding: utf-8
 # frozen_string_literal: true
-
 Given(/^NetTester 物理スイッチとテスト対象ホストを次のように接続:$/) do |table|
   ip_of_host = {}
   mac_of_host = {}
@@ -10,7 +9,7 @@ Given(/^NetTester 物理スイッチとテスト対象ホストを次のよう�
     host_id = each['Host']
     ip_address = "192.168.0.#{host_id}"
     ip_of_host[host_id] = ip_address
-    mac_address = "00:ba:dc:ab:1e:#{sprintf('%02x', host_id)}"
+    mac_address = "00:ba:dc:ab:1e:#{format('%02x', host_id)}"
     mac_of_host[host_id] = mac_address
     vhost_arp_list.append "#{ip_address}/#{mac_address}"
   end
