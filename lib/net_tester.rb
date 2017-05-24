@@ -3,6 +3,7 @@
 require 'faker'
 require 'net_tester/netns'
 require 'net_tester/test_switch'
+require 'net_tester/process'
 require 'phut'
 require 'phut/shell_runner'
 require 'trema'
@@ -10,6 +11,8 @@ require 'trema'
 # Base module
 module NetTester
   extend Phut::ShellRunner
+
+  @process_dir = '/tmp'
 
   def self.log_dir
     Phut.log_dir
@@ -36,6 +39,16 @@ module NetTester
   def self.socket_dir=(dir)
     FileUtils.mkdir_p(dir) unless File.exist?(dir)
     Phut.socket_dir = dir
+  end
+
+  def self.process_dir
+    @process_dir
+  end
+
+  def self.process_dir=(dir)
+    dir = File.expand_path(dir)
+    FileUtils.mkdir_p(dir) unless File.exist?(dir)
+    @process_dir = dir
   end
 
   def self.run(network_device:, physical_switch_dpid:)
@@ -121,6 +134,7 @@ module NetTester
     Phut::Netns.destroy_all
     Phut::Vhost.destroy_all
     Phut::Link.destroy_all
+    Process.destroy_all
   rescue
     true
   ensure
