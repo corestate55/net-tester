@@ -23,9 +23,9 @@ module NetTester
 
     def initialize(host_name:, initial_wait: 3, process_wait: 1)
       @@mutex.synchronize do
-        @id = (@@process_id_counter = @@process_id_counter + 1).to_s
+        @id = @@process_id_counter = @@process_id_counter + 1
         @host_name = host_name
-        @log_dir = File.join(Aruba.config.working_directory, 'processes', @id)
+        @log_dir = File.join(Aruba.config.working_directory, 'processes', @id.to_s)
         FileUtils.mkdir_p(@log_dir) unless File.exist?(@log_dir)
         @stdout_file = File.join(@log_dir, 'stdout.log')
         @stderr_file = File.join(@log_dir, 'stderr.log')
@@ -57,11 +57,13 @@ module NetTester
     def exec(command)
       thread = Thread.start do
         begin
+          @status = 'waiting initial wait'
           sleep @initial_wait
           @status = 'running'
           host = Phut::Netns.find_by(name: @host_name)
           raise "no such host: #{@host_name}" if host.nil?
           host.exec "#{command} 1> #{@stdout_file} 2> #{@stderr_file}"
+          @status = 'waiting process wait'
           sleep @process_wait
           @stdout = File.read(@stdout_file)
           @stderr = File.read(@stderr_file)
